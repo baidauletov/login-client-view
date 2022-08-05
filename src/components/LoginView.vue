@@ -1,8 +1,15 @@
 <template>
   <div class="login">
     <section class="main">
+        <span class="main__status" :style="{background: computerStatus[currentStatus].color}">
+            {{ computerStatus[currentStatus].title }}
+        </span>
         <h1 class="main__title">{{ title }}</h1>
-        <div>
+        <div class="">
+            <h2 v-if="activeTab === 'enter'" class="main__subtitle">{{ $tc('login.title') }}</h2>
+            <h2 v-if="activeTab !== 'enter'" class="main__subtitle">{{ $tc('login.title2') }}</h2>
+        </div>
+        <div class="main__tab-button-wrapper">
             <button class="main__tab-button main__tab-button_small" :class="{ 'main__tab-button_acitve' : activeTab === 'enter'}" @click="switchMainBlock('enter')">
                 {{ $tc('login.enter')  }}
             </button>
@@ -12,7 +19,7 @@
         </div>
         <div class="tab-wrapper">
             <div v-if="activeTab === 'enter'" class="main__login-block-wrapper">
-                <h2 class="main__subtitle">{{ $tc('login.title') }}</h2>
+                <!-- <h2 class="main__subtitle">{{ $tc('login.title') }}</h2> -->
                 <ValidationObserver>
                 <div class="main__login-block">
                     <label for="login" class="main__label">{{ inputLabel }}</label>
@@ -154,7 +161,26 @@ export default {
             passwordHide: true,
             switchDropdownShow: false,
             langDropdownShow: false,
-            activeTab: 'enter'
+            activeTab: 'enter',
+            currentStatus: 0,
+            computerStatus: [
+                {
+                    title: 'Свободен',
+                    color: '#457c45'
+                },
+                {
+                    title: 'Занят',
+                    color: '#3f3fe6'
+                },
+                {
+                    title: 'Не в сети',
+                    color: '#b42d2d'
+                },
+                {
+                    title: 'В обслуживании',
+                    color: '#575757'
+                },
+            ]
         }
     },
 
@@ -233,11 +259,22 @@ export default {
         flex-direction: column;
         justify-content: flex-start;
         position: relative;
+        .main__status {
+            position: absolute;
+            top: 1.5rem;
+            border-radius: 0.25rem;
+            padding: 0.5rem 1.875rem;
+            color: white;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            font-weight: 600;
+            min-width: 8rem;
+        }
         .main__title {
             color: gray;
             font-size: 12rem;
             font-weight: 800;
-            margin: 1rem 0 3rem;
+            margin: 1rem 0 0;
         }
         .tab-wrapper {
             display: flex;
@@ -289,13 +326,16 @@ export default {
             text-align: left;
             width: 87%;
         }
+        .main__tab-button-wrapper {
+            padding-bottom: 2rem;
+        }
         .main__tab-button {
             padding: 0.75rem 1.5rem;
-            font-size: 1.5rem;
+            font-size: 1.125rem;
             background: #494949;
             color: rgb(204, 204, 204);
             border-radius: 0.25rem;
-            width: 56%;
+            width: 56%; 
             cursor: pointer;
             &:hover {
                 background: #5e5e5e;

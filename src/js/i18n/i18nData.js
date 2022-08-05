@@ -2,6 +2,7 @@ export default {
     ru: {
         login: {
             title: 'Вход в систему',
+            title2: 'Дополнительно',
             buttonTitle: 'Войти',
             login: 'Логин',
             bill: 'Чек',
@@ -22,6 +23,7 @@ export default {
     kz: {
         login: {
             title: 'Системага кіру',
+            title2: 'Косымша',
             buttonTitle: 'Кіру',
             login: 'Логин',
             bill: 'Чек',
@@ -42,6 +44,7 @@ export default {
     en: {
         login: {
             title: 'System Login',
+            title2: 'Extra',
             buttonTitle: 'Login',
             login: 'Login',
             bill: 'Bill',
