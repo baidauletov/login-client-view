@@ -14,11 +14,63 @@ npm run serve
 ```
 npm run build
 ```
+---
+---
+### Методы
 
-### Lints and fixes files
+#### onLogin - Войти
+При нажатии кнопки Войти может дать 2 варианта ответа в console:
+
+- При `Чек - e` тип будет `type: 'check'`, данные - `check` в console.
+   ##### Пример:
 ```
-npm run lint
+{"type":"check","check":"123"}
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- При `Логин - e` тип будет `type: 'login'`, данные -  `login, password` в console.
+   ##### Пример:
+```
+{"type":"login","login":"userlogin","password":"userpassword"}
+```
+---
+#### switchOff - Завершение работы
+`type: 'switchOff'`
+   ##### Пример:
+```
+{"type":"switchOff"}
+```
+---
+#### reload - Перезагрузка
+`type: 'reboot'`
+   ##### Пример:
+```
+{"type":"reboot"}
+```
+---
+#### changeLang - Смена языка
+`{"type":"langChange"}`
+
+Варианты `rus, eng`
+   ##### Пример:
+```
+{"type":"langChange","data":{"lang":"rus"}}
+{"type":"langChange","data":{"lang":"eng"}}
+```
+
+---
+### Переменные
+`title` - номер компьютера,
+      
+`login` - переменная для чека или логина,
+      
+`password` - пароль логина,
+      
+ `online` - переменная для отображения статуса подключения к интернету, тип `Boolean` , default `true`
+ 
+`language` - переменая для языка,
+
+`currentStatus` - переманная статуса компьюетра, варианты:
+ - `0` - 'Свободен'
+ - `1` - 'Занят'
+ - `2` - 'Не в сети'
+ - `3` - 'В обслуживании'
