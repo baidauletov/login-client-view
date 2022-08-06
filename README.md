@@ -56,6 +56,8 @@ npm run build
 {"type":"langChange","data":{"lang":"rus"}}
 {"type":"langChange","data":{"lang":"eng"}}
 ```
+
+---
 ### Переменные
 `title` - номер компьютера,
       
