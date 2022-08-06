@@ -20,8 +20,8 @@
         <div class="tab-wrapper">
             <div v-if="activeTab === 'enter'" class="main__login-block-wrapper">
                 <!-- <h2 class="main__subtitle">{{ $tc('login.title') }}</h2> -->
-                <ValidationObserver>
-                <div class="main__login-block">
+                <ValidationObserver ref="form">
+                <div class="main__login-block" >
                     <label for="login" class="main__label">{{ inputLabel }}</label>
                     <ValidationProvider
                         class="validation-provider"
@@ -95,13 +95,13 @@
 </template>
 
 <script>
+import { ValidationProvider, ValidationObserver } from 'vee-validate';
+import { localize, extend } from 'vee-validate'
+import { required } from 'vee-validate/dist/rules';
 import wifiConnect from './icons/wifiConnect.vue'
 import wifiNoConnect from './icons/wifiNoConnect.vue'
 import switchIcon from './icons/switchIcon.vue';
 import closeIcon from './icons/closeIcon.vue';
-import { ValidationProvider, ValidationObserver } from 'vee-validate';
-import { required } from 'vee-validate/dist/rules';
-import { localize, extend } from 'vee-validate'
 import eyeOpen from './icons/eyeOpen.vue';
 import eyeClose from './icons/eyeClose.vue';
 
@@ -185,8 +185,26 @@ export default {
     },
 
     methods: {
-        onLogin() {
-            return 
+        async onLogin() {
+            const validation = await this.$refs.form.validate()
+            if(validation) {
+                if (this.passwordShow) {
+                    if(this.password) {
+                        const data = JSON.stringify({ 
+                            type: 'login', 
+                            login: this.login, 
+                            password: this.password 
+                        })
+                        console.log(data)
+                    }
+                } else {
+                    const data = JSON.stringify({ 
+                        type: 'check', 
+                        check: this.login 
+                    })
+                    console.log(data)
+                }
+            }
         },
         onPasswordShow(show) {
             console.log('show: ',show)
