@@ -28,7 +28,7 @@
                         v-slot="{ errors }"
                         :rules="{ required: true}"
                     >
-                        <input type="text" name="login" v-model="login" class="main__login-input">
+                        <input type="text" name="login" v-model="login" class="main__login-input" v-on:keyup.enter="onLogin">
                         <span class="validation-error">{{ errors[0] }}</span>
                         <span @click="clearField">
                             <closeIcon class="main__erase-button" />
@@ -41,7 +41,7 @@
                             v-slot="{ errors }"
                             :rules="{ required: true}"
                             >
-                            <input :type="passwordFieldType" name="password" v-model="password" class="main__login-input" >
+                            <input :type="passwordFieldType" name="password" v-model="password" class="main__login-input" v-on:keyup.enter="onLogin">
                             <span class="validation-error">{{ errors[0] }}</span>
                             <span @click="onPasswordShow(true)">
                                 <eye-close v-if="passwordHide" class="main__erase-button main__show-button"  />
@@ -54,13 +54,17 @@
                     <div v-else class="password-placeholder">
                     </div>
                     <button class="main__button" @click="onLogin">
-                        {{ $tc('login.buttonTitle')  }}
+                        <span v-if="!buttonLoading">
+                            {{ $tc('login.buttonTitle')  }}
+                        </span>
+                        <clipLoader :loading="buttonLoading" :color="loadingColor" :size="'1.5rem'"></clipLoader>
                     </button>
                 </div>
                 </ValidationObserver>
             </div>
             <div v-if="activeTab === 'extra'" class="main__extra-block-wrapper">
-                <button class="extra__create-button" @click="createNewLogin()">{{ $tc('login.extraContent.createLogin') }}</button>
+                <button class="extra__create-button" @click="createCheck()">{{ $tc('login.extraContent.createCheck') }}</button>
+                <button class="extra__create-button" @click="createLogin()">{{ $tc('login.extraContent.createLogin') }}</button>
             </div>
         </div>
         <div class="main__footer">
@@ -98,6 +102,7 @@
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 import { localize, extend } from 'vee-validate'
 import { required } from 'vee-validate/dist/rules';
+import clipLoader from 'vue-spinner/src/ClipLoader.vue'
 import wifiConnect from './icons/wifiConnect.vue'
 import wifiNoConnect from './icons/wifiNoConnect.vue'
 import switchIcon from './icons/switchIcon.vue';
@@ -142,6 +147,7 @@ export default {
     components: {
         ValidationObserver,
         ValidationProvider,
+        clipLoader,
         wifiNoConnect,
         wifiConnect,
         switchIcon,
@@ -162,6 +168,8 @@ export default {
             switchDropdownShow: false,
             langDropdownShow: false,
             activeTab: 'enter',
+            buttonLoading: false,
+            loadingColor: 'white',
             currentStatus: 0,
             computerStatus: [
                 {
@@ -188,6 +196,11 @@ export default {
         onLogin() {
             // const validation = await this.$refs.form.validate()
             const validation = true
+            this.buttonLoading = true
+            // для наглядности пока как пример
+            if(this.login==='donut') {
+                this.clearField()
+            }
             if(validation) {
                 if (this.passwordShow) {
                     if(this.password) {
@@ -206,6 +219,7 @@ export default {
                     console.log(data)
                 }
             }
+            setTimeout(() => { this.buttonLoading = false }, 1000);
         },
         onPasswordShow(show) {
             console.log('show: ',show)
@@ -244,9 +258,17 @@ export default {
         switchMainBlock(tab) {
             this.activeTab = tab
         },
-        createNewLogin() {
+        createCheck() {
+            const data = JSON.stringify({ type: 'createCheck' })
+            console.log(data)
+        },
+        createLogin() {
             const data = JSON.stringify({ type: 'createLogin' })
             console.log(data)
+        },
+        clearFields() {
+            this.login = ''
+            this.password =''
         }
     },
 
@@ -293,7 +315,7 @@ export default {
             color: gray;
             font-size: 12rem;
             font-weight: 800;
-            margin: 1rem 0 0;
+            margin: 0;
         }
         .tab-wrapper {
             display: flex;
@@ -369,13 +391,19 @@ export default {
             color: white;
         }
         .main__button {
-            padding: 1rem 1.5rem;
+            padding: 0.5rem 1.5rem;
             font-size: 1.5rem;
             background: #47c2ff;
             color: white;
             border-radius: 0.5rem;
             width: 88%;
             cursor: pointer;
+            span {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 2.25rem;
+            }
             &:hover {
                 background: #1bacf5;
             }
@@ -387,12 +415,13 @@ export default {
             width: 100%;
             padding: 1rem 0;
             .extra__create-button {
-                padding: 1rem 1.5rem;
-                font-size: 1.5rem;
+                padding: 0.75rem 1.5rem;
+                font-size: 1.25rem;
                 background: #47c2ff;
                 color: white;
                 border-radius: 0.5rem;
                 width: 86%;
+                margin-bottom: 0.75rem;
                 cursor: pointer;
                 &:hover {
                     background: #1bacf5;

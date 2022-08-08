@@ -16,6 +16,7 @@ export default {
             enter: 'Вход',
             extra: 'Дополнительно',
             extraContent: {
+                createCheck: 'Создать чек',
                 createLogin: 'Создать логин'
             }
         }
@@ -37,6 +38,7 @@ export default {
             enter: 'Кіру',
             extra: 'Extra',
             extraContent: {
+                createCheck: 'Создать чек',
                 createLogin: 'Создать логин'
             }
         }
@@ -58,6 +60,7 @@ export default {
             enter: 'Login',
             extra: 'Extra',
             extraContent: {
+                createCheck: 'Create check',
                 createLogin: 'Create login'
             }
         }
