@@ -56,6 +56,12 @@ npm run build
 {"type":"langChange","data":{"lang":"rus"}}
 {"type":"langChange","data":{"lang":"eng"}}
 ```
+---
+#### clearFields - Отчистка полей
+---
+#### createCheck - Создание чека `type` `createCheck`
+---
+#### createLogin - Создание логина `type` `createLogin`
 
 ---
 ### Переменные
@@ -74,3 +80,5 @@ npm run build
  - `1` - 'Занят'
  - `2` - 'Не в сети'
  - `3` - 'В обслуживании'
+ 
+ `buttonLoading` - переменная активации спиннера в кнопке Войти, тип `Boolean`, default `false`
