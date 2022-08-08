@@ -185,8 +185,9 @@ export default {
     },
 
     methods: {
-        async onLogin() {
-            const validation = await this.$refs.form.validate()
+        onLogin() {
+            // const validation = await this.$refs.form.validate()
+            const validation = true
             if(validation) {
                 if (this.passwordShow) {
                     if(this.password) {
