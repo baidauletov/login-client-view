@@ -57,7 +57,7 @@ npm run build
 {"type":"langChange","data":{"lang":"eng"}}
 ```
 ---
-#### clearFields - Отчистка полей
+#### clearFields - Очистка полей
 ---
 #### createCheck - Создание чека `type` `createCheck`
 ---
